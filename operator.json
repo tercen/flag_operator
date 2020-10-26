@@ -1,9 +1,9 @@
 {
-  "name": "Template R operator",
-  "description": "Return the medium value of a cell",
-  "tags": ["template"],
+  "name": "Flag operator",
+  "description": "Flag text or numerical values based on a condition.",
+  "tags": ["data wrangling", "text processing"],
   "authors": ["tercen"],
-  "urls": ["https://github.com/tercen/template_R_operator"],
+  "urls": ["https://github.com/tercen/flag_operator"],
   "properties": []
 }
 
