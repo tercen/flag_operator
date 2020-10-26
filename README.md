@@ -15,7 +15,7 @@ Input parameters|.
 ---|---
 `type`        | whether the values to flag are `character` or `numeric`
 `comparison`        | comparison to perform, any of: `equals`, `greater`, `less`, `greater_or_equal`, `less_or_equal`  (for numeric values); or  `equals`, `contains`, `is_in` (for text values)
-`output_var`        | output relation
+`value`        | value to compare data to
 
 Output relations|.
 ---|---

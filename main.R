@@ -7,10 +7,10 @@ type <- "numeric"
 if(!is.null(ctx$op.value("type"))) type <-ctx$op.value("type")
 comparison <- "greater"
 if(!is.null(ctx$op.value("comparison"))) type <-ctx$op.value("comparison")
-value <- "100"
+value <- ""
 if(!is.null(ctx$op.value("comparison"))) type <-ctx$op.value("value")
 
-comp.num <- c("equals", "greater", "less", "less_or_equal", "greater_or_equal")
+comp.num <- c("equals", "greater", "less", "less_or_equals", "greater_or_equals")
 comp.char <- c("equals", "contains", "is_in")
 
 if(type == "numeric") {
@@ -21,8 +21,8 @@ if(type == "numeric") {
   if(comparison == "equals") df <- df %>% transmute(flag = ifelse(.y == value, "pass", "fail"))
   if(comparison == "greater") df <- df %>% transmute(flag = ifelse(.y > value, "pass", "fail"))
   if(comparison == "less") df <- df %>% transmute(flag = ifelse(.y < value, "pass", "fail"))
-  if(comparison == "greater_or_equal") df <- df %>% transmute(flag >= ifelse(.y < value, "pass", "fail"))
-  if(comparison == "less_or_equal") df <- df %>% transmute(flag <= ifelse(.y < value, "pass", "fail"))
+  if(comparison == "greater_or_equals") df <- df %>% transmute(flag >= ifelse(.y < value, "pass", "fail"))
+  if(comparison == "less_or_equals") df <- df %>% transmute(flag <= ifelse(.y < value, "pass", "fail"))
   df %>%
     ctx$addNamespace() %>%
     ctx$save()

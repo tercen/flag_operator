@@ -4,7 +4,39 @@
   "tags": ["data wrangling", "text processing"],
   "authors": ["tercen"],
   "urls": ["https://github.com/tercen/flag_operator"],
-  "properties": []
+  "properties": [
+      {
+    "kind": "StringProperty",
+    "name": "type",
+    "defaultValue": "numeric",
+    "values": [
+      "numeric",
+      "character"
+    ],
+    "description": "Type of data to flag."
+  },
+    {
+    "kind": "EnumeratedProperty",
+    "name": "comparison",
+    "defaultValue": "equals",
+    "values": [
+      "equals",
+      "greater",
+      "less",
+      "greater_or_equals",
+      "less_or_equals",
+      "is_in",
+      "contains"
+    ],
+    "description": "dna, rna, or protein sequences?"
+  },
+    {
+    "kind": "StringProperty",
+    "name": "value",
+    "defaultValue": "",
+    "description": "Value to compare data to."
+  }
+  ]
 }
 
 
