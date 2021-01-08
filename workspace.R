@@ -1,8 +1,8 @@
 library(tercen)
 library(dplyr)
 
-options("tercen.workflowId" = "d330322c43363eb4f9b27738ef0042b9")
-options("tercen.stepId"     = "1ae42627-e9ce-4d9f-9797-8700adfd7718")
+options("tercen.workflowId" = "01cb95cd7b746443ed9f40625200ef4f")
+options("tercen.stepId"     = "635b15c9-55d2-466d-bda9-6e9469b67532")
 
 getOption("tercen.workflowId")
 getOption("tercen.stepId")
@@ -16,19 +16,38 @@ if(!is.null(ctx$op.value("comparison"))) type <-ctx$op.value("comparison")
 value <- "100"
 if(!is.null(ctx$op.value("comparison"))) type <-ctx$op.value("value")
 
-comp.num <- c("equals", "greater", "less", "less_or_equal", "greater_or_equal")
+comp.num <- c("equals", "greater", "less", "less_or_equal", "greater_or_equal", "top", "bottom")
 comp.char <- c("equals", "contains", "is_in")
 
 if(type == "numeric") {
   if(!comparison %in% comp.num) stop("Wrong comparison for numeric values.")
   value <- as.numeric(value)
   df <- ctx %>% 
-    select(.y)
+    select(.y, .ri, .ci) %>% group_by(.ri, .ci)
   if(comparison == "equals") df <- df %>% transmute(flag = ifelse(.y == value, "pass", "fail"))
   if(comparison == "greater") df <- df %>% transmute(flag = ifelse(.y > value, "pass", "fail"))
   if(comparison == "less") df <- df %>% transmute(flag = ifelse(.y < value, "pass", "fail"))
-  if(comparison == "greater_or_equal") df <- df %>% transmute(flag >= ifelse(.y < value, "pass", "fail"))
-  if(comparison == "less_or_equal") df <- df %>% transmute(flag <= ifelse(.y < value, "pass", "fail"))
+  if(comparison == "greater_or_equal") df <- df %>% transmute(flag = ifelse(.y >= value, "pass", "fail"))
+  if(comparison == "less_or_equal") df <- df %>% transmute(flag = ifelse(.y <= value, "pass", "fail"))
+  if(comparison == "top") {
+    if(0 < value & value < 1) {
+      tr <- quantile(.y, probs = 1 - value, na.rm = TRUE)
+      df <- df %>% transmute(flag = ifelse(.y >= tr, "pass", "fail"))
+    } else {
+      tr <- head(sort(.y, decreasing = TRUE), value)
+      df <- df %>% transmute(flag = ifelse(.y >= tr, "pass", "fail"))
+    }
+  }
+  if(comparison == "bottom") {
+    if(0 < value & value < 1) {
+      tr <- quantile(.y, probs = value, na.rm = TRUE)
+      df <- df %>% transmute(flag = ifelse(.y <= tr, "pass", "fail"))
+    } else {
+      tr <- head(sort(.y, decreasing = FALSE), value)
+      df <- df %>% transmute(flag = ifelse(.y <= tr, "pass", "fail"))
+    }
+  } 
+
   df %>%
     ctx$addNamespace() %>%
     ctx$save()

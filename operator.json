@@ -25,10 +25,12 @@
       "less",
       "greater_or_equals",
       "less_or_equals",
+      "top",
+      "bottom",
       "is_in",
       "contains"
     ],
-    "description": "dna, rna, or protein sequences?"
+    "description": "Comparison to perform"
   },
     {
     "kind": "StringProperty",
