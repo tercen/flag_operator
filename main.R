@@ -24,7 +24,7 @@ do.compare <- function(df, comparison, value) {
       tr <- quantile(df$.y, probs = 1 - value, na.rm = TRUE)
       df <- df %>% transmute(flag = ifelse(.y >= tr, "pass", "fail"))
     } else {
-      tr <- head(sort(df$.y, decreasing = TRUE), value)
+      tr <- sort(df$.y, decreasing = TRUE)[value]
       df <- df %>% transmute(flag = ifelse(.y >= tr, "pass", "fail"))
     }
   }
@@ -33,7 +33,7 @@ do.compare <- function(df, comparison, value) {
       tr <- quantile(df$.y, probs = value, na.rm = TRUE)
       df <- df %>% transmute(flag = ifelse(.y <= tr, "pass", "fail"))
     } else {
-      tr <- head(sort(df$.y, decreasing = FALSE), value)
+      tr <- sort(df$.y, decreasing = FALSE)[value]
       df <- df %>% transmute(flag = ifelse(.y <= tr, "pass", "fail"))
     }
   }
