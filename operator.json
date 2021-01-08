@@ -35,7 +35,7 @@
     {
     "kind": "StringProperty",
     "name": "value",
-    "defaultValue": "",
+    "defaultValue": "0.5",
     "description": "Value to compare data to."
   }
   ]
