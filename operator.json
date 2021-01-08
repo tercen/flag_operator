@@ -5,8 +5,8 @@
   "authors": ["tercen"],
   "urls": ["https://github.com/tercen/flag_operator"],
   "properties": [
-      {
-    "kind": "StringProperty",
+    {
+    "kind": "EnumeratedProperty",
     "name": "type",
     "defaultValue": "numeric",
     "values": [

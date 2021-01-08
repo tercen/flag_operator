@@ -10,20 +10,16 @@ getOption("tercen.stepId")
 ctx <- tercenCtx()
 
 type <- "numeric"
-if(!is.null(ctx$op.value("type"))) type <-ctx$op.value("type")
-comparison <- "greater"
-if(!is.null(ctx$op.value("comparison"))) type <-ctx$op.value("comparison")
-value <- "100"
-if(!is.null(ctx$op.value("comparison"))) type <-ctx$op.value("value")
+if(!is.null(ctx$op.value("type"))) type <- ctx$op.value("type")
+comparison <- "top"
+if(!is.null(ctx$op.value("comparison"))) comparison <- ctx$op.value("comparison")
+value <- "0.06"
+if(!is.null(ctx$op.value("value"))) value <- ctx$op.value("value")
 
 comp.num <- c("equals", "greater", "less", "less_or_equal", "greater_or_equal", "top", "bottom")
 comp.char <- c("equals", "contains", "is_in")
 
-if(type == "numeric") {
-  if(!comparison %in% comp.num) stop("Wrong comparison for numeric values.")
-  value <- as.numeric(value)
-  df <- ctx %>% 
-    select(.y, .ri, .ci) %>% group_by(.ri, .ci)
+do.compare <- function(df, comparison, value) {
   if(comparison == "equals") df <- df %>% transmute(flag = ifelse(.y == value, "pass", "fail"))
   if(comparison == "greater") df <- df %>% transmute(flag = ifelse(.y > value, "pass", "fail"))
   if(comparison == "less") df <- df %>% transmute(flag = ifelse(.y < value, "pass", "fail"))
@@ -31,27 +27,42 @@ if(type == "numeric") {
   if(comparison == "less_or_equal") df <- df %>% transmute(flag = ifelse(.y <= value, "pass", "fail"))
   if(comparison == "top") {
     if(0 < value & value < 1) {
-      tr <- quantile(.y, probs = 1 - value, na.rm = TRUE)
+      tr <- quantile(df$.y, probs = 1 - value, na.rm = TRUE)
       df <- df %>% transmute(flag = ifelse(.y >= tr, "pass", "fail"))
     } else {
-      tr <- head(sort(.y, decreasing = TRUE), value)
+      tr <- head(sort(df$.y, decreasing = TRUE), value)
       df <- df %>% transmute(flag = ifelse(.y >= tr, "pass", "fail"))
     }
   }
   if(comparison == "bottom") {
     if(0 < value & value < 1) {
-      tr <- quantile(.y, probs = value, na.rm = TRUE)
+      tr <- quantile(df$.y, probs = value, na.rm = TRUE)
       df <- df %>% transmute(flag = ifelse(.y <= tr, "pass", "fail"))
     } else {
-      tr <- head(sort(.y, decreasing = FALSE), value)
+      tr <- head(sort(df$.y, decreasing = FALSE), value)
       df <- df %>% transmute(flag = ifelse(.y <= tr, "pass", "fail"))
     }
-  } 
+  }
+  return(df)
+}
+
+if(type == "numeric") {
+  
+  if(!comparison %in% comp.num) stop("Wrong comparison for numeric values.")
+  value <- as.numeric(value)
+  df <- ctx %>% 
+    select(.y, .ri, .ci) %>%
+    group_by(.ri, .ci) %>%
+    do(do.compare(., comparison, value)) %>%
+    ungroup() %>%
+    select(-.ri, -.ci)
 
   df %>%
     ctx$addNamespace() %>%
     ctx$save()
+  
 } else if(type == "character") {
+  
   if(!comparison %in% comp.char) stop("Wrong comparison for character values.")
   df <- ctx %>% 
     rselect()
@@ -61,5 +72,6 @@ if(type == "numeric") {
   tibble(flag) %>% mutate(.ri = seq_len(nrow(.)) - 1) %>%
     ctx$addNamespace() %>%
     ctx$save()
+  
 }
 
