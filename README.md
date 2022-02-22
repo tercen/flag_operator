@@ -14,7 +14,7 @@ Input projection|.
 Input parameters|.
 ---|---
 `type`        | whether the values to flag are `character` or `numeric`
-`comparison`        | comparison to perform, any of: `equals`, `greater`, `less`, `greater_or_equal`, `less_or_equal`, `top`, `bottom`  (for numeric values); or  `equals`, `contains`, `is_in` (for text values)
+`comparison`        | comparison to perform, any of: `equals`, `greater`, `less`, `greater_or_equal`, `less_or_equal`, `top`, `bottom`  (for numeric values), or  `equals`, `contains`, `is_in` (for text values)
 `value`        | value to compare data to
 
 Output relations|.
