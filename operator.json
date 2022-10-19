@@ -23,8 +23,8 @@
       "equals",
       "greater",
       "less",
-      "greater_or_equals",
-      "less_or_equals",
+      "greater_or_equal",
+      "less_or_equal",
       "top",
       "bottom",
       "is_in",
@@ -32,11 +32,23 @@
     ],
     "description": "Comparison to perform"
   },
-    {
+  {
     "kind": "StringProperty",
     "name": "value",
     "defaultValue": "0.5",
     "description": "Value to compare data to."
+  },
+  {
+    "kind": "StringProperty",
+    "name": "pass.flag",
+    "defaultValue": "pass",
+    "description": "Name to give to observations that satisfy the condition."
+  },
+  {
+    "kind": "StringProperty",
+    "name": "fail.flag",
+    "defaultValue": "fail",
+    "description": "Name to give to observations that do not satisfy the condition."
   }
   ]
 }
