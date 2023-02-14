@@ -1,7 +1,7 @@
 {
-  "name": "Flag Condition",
-  "description": "Highlight text or numerical values based on a setting.",
-  "tags": ["data wrangling", "text processing"],
+  "name": "Flag Values",
+  "description": "Highlight text or numerical values based on a condition.",
+  "tags": ["data wrangling"],
   "authors": ["tercen"],
   "urls": ["https://github.com/tercen/flag_operator"],
   "properties": [
@@ -38,6 +38,12 @@
     "defaultValue": "0.5",
     "description": "Value to compare data to."
   },
+  {
+    "kind": "StringProperty",
+    "name": "flag.name",
+    "defaultValue": "flag",
+    "description": "Name to give to the output variable containing the flags."
+  },,
   {
     "kind": "StringProperty",
     "name": "pass.flag",
