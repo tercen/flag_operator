@@ -43,7 +43,7 @@
     "name": "flag.name",
     "defaultValue": "flag",
     "description": "Name to give to the output variable containing the flags."
-  },,
+  },
   {
     "kind": "StringProperty",
     "name": "pass.flag",
