@@ -5,11 +5,10 @@ ctx <- tercenCtx()
 
 type <- ctx$op.value("type", as.character, "numeric")
 comparison <- ctx$op.value("comparison", as.character, "equals")
-value <- ctx$op.value("value", as.character, "0.06")
+value <- ctx$op.value("value", as.character, "0.5")
 flag.name <- ctx$op.value("flag.name", as.character, "flag")
 pass.flag <- ctx$op.value("pass.flag", as.character, "pass")
 fail.flag <- ctx$op.value("fail.flag", as.character, "fail")
-
 
 comp.num <- c("equals", "greater", "less", "less_or_equal", "greater_or_equal", "top", "bottom")
 comp.char <- c("equals", "contains", "is_in")
