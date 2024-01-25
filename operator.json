@@ -1,6 +1,6 @@
 {
   "name": "Flag Values",
-  "description": "Highlight text or numerical values based on a condition.",
+  "description": "Labels text or numerical values based on a condition.",
   "tags": [
     "annotation"
   ],
