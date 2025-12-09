@@ -78,7 +78,7 @@
             "description": "Values to flag, if they are textual.",
             "ontologyMapping": "variable",
             "crosstabMapping": "row",
-            "cardinality": "1..n",
+            "cardinality": "0..n",
             "factors": []
           }
         ],
@@ -93,7 +93,7 @@
                 "description": "Values to flag, if they are numeric.",
                 "ontologyMapping": "measurement",
                 "crosstabMapping": "y",
-                "cardinality": "1",
+                "cardinality": "0..1",
                 "factors": []
               }
             ]
