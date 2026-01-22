@@ -5,6 +5,7 @@
       "description": "Join keys vary based on 'type' property",
       "alternatives": [
         {
+          "kind": "OutputAlternative",
           "condition": "type = 'numeric' (default)",
           "joinSpec": {
             "kind": "OperatorJoinSpec",
@@ -36,6 +37,7 @@
           }
         },
         {
+          "kind": "OutputAlternative",
           "condition": "type = 'character'",
           "joinSpec": {
             "kind": "OperatorJoinSpec",
