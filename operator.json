@@ -89,7 +89,7 @@
               {
                 "kind": "MetaFactor",
                 "name": "Numeric Values",
-                "type": "numeric",
+                "type": "double",
                 "description": "Values to flag, if they are numeric.",
                 "ontologyMapping": "measurement",
                 "crosstabMapping": "y",
